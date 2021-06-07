@@ -96,7 +96,7 @@ function appendDish(info) {
         btn.innerText = "add to cart"
         btn.style.display = 'block'
         btn.onclick = function () {
-            addcart(info)
+            addcart(info[i])
         }
         menu.append(box)
         menu.append(btn)
@@ -109,20 +109,31 @@ info = JSON.parse(info)
 appendDish(info)
 
 function addcart(el) {
-    let cart;
-    let arr2;
-    arr2 = localStorage.getItem('cart')
-    
-    if (cart == null) {
-        arr2=[]
-    } else {
-        // arr2 = localStorage.getItem('cart')
-        arr2 = JSON.parse(arr2)
+     let cart;
+        let arr;
+        arr = localStorage.getItem('cart')
+        
+    if (arr == null) {
+            
+        arr = []
+        arr.push(el)
+        localStorage.setItem('cart', JSON.stringify(arr))
+        } else {
+            var count = 0
+            arr = JSON.parse(arr)
+            console.log(arr)
+            let inc = el
+            for (let i = 0; i < arr.length; i++){
+                if (inc.image == arr[i].image) {
+                    console.log("noooo")
+                    count++
+                    alert("already exist")
+                    break
+                }
+            }
     }
-    arr2 = JSON.parse(el)
-    console.log(arr2)
-}
-
-function showCart() {
-    window.location.href="cart.html"
+    if (count == 0) {
+        arr.push(el)
+        localStorage.setItem('cart', JSON.stringify(arr))
+    }
 }
